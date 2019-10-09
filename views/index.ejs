@@ -1,0 +1,246 @@
+<%#引入ejs模板代码%>
+<%- include("part/header",{title:"新一的个人博客",css:["index"],js:["part/title","moment"],layui:true})%>
+<div class="mao_box">
+    <div class="mao">
+        <div class="mao_head">
+            <div class="huawen">
+                <div>
+                    <!--头部花纹——左边橙色-->
+                </div>
+            </div>
+        </div>
+        <div class="erduo">
+            <div></div>
+            <div></div>
+        </div>
+        <div class="yanjing">
+            <div>
+                <div class="yanquan">
+                    <div></div>
+                </div>
+                <div class="yanquan_hedding">
+
+                </div>
+                <div class="hong"></div>
+            </div>
+            <div class="yan_right">
+                <div class="yanquan">
+                    <div></div>
+                </div>
+                <div class="yanquan_hedding">
+
+                </div>
+                <div class="hong"></div>
+            </div>
+            <div style="clear:both"></div>
+        </div>
+        <div class="face_huawen">
+            <div class="face_huawen_huawen huawen_left">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+
+            </div>
+            <div class="face_huawen_huawen huawen_right">
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+                <div></div>
+
+            </div>
+            <div style="clear:both"></div>
+        </div>
+        <div class="bizi">
+            <div></div>
+            <div></div>
+            <div></div>
+            <div></div>
+        </div>
+        <div class="zuiba_box">
+            <div class="zuiba">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+        </div>
+    </div>
+</div>
+<%- include("part/canvas")%>
+<%- include("part/menu")%>
+
+<!--头像-->
+<div id="blogger">
+    <div class="pic">
+        <a href=""></a>
+    </div>
+    <div class="name">
+
+        This is xinyi
+
+    </div>
+</div>
+<!--盒子装饰-->
+<div id="decorate">
+    <svg id="header-decor" class="decor bottom" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 100 100"
+        preserveAspectRatio="none">
+        <path class="large left" d="M0 0 L50 50 L0 100" fill="rgba(255,255,255, .1)"></path>
+        <path class="large right" d="M100 0 L50 50 L100 100" fill="rgba(255,255,255, .1)"></path>
+        <path class="medium left" d="M0 100 L50 50 L0 33.3" fill="rgba(255,255,255, .3)"></path>
+        <path class="medium right" d="M100 100 L50 50 L100 33.3" fill="rgba(255,255,255, .3)"></path>
+        <path class="small left" d="M0 100 L50 50 L0 66.6" fill="rgba(255,255,255, .5)"></path>
+        <path class="small right" d="M100 100 L50 50 L100 66.6" fill="rgba(255,255,255, .5)"></path>
+        <path d="M0 99.9 L50 49.9 L100 99.9 L0 99.9" fill="rgba(255,255,255, .97)"></path>
+        <path d="M48 52 L50 49 L52 52 L48 52" fill="rgba(255,255,255, .97)"></path>
+    </svg>
+</div>
+<!--内容-->
+<div id="content">
+    <div class="content-main">
+        <ul class="content-main-left" id="txt">
+
+            <script>
+                (function article() {
+
+                    layui.use(['laypage', 'layer'], function () {
+
+                        var laypage = layui.laypage,
+                            layer = layui.layer;
+
+                        //测试数据
+                        $.ajax({
+                            method: "post",
+                            url: "/",
+                            data: {},
+                            success: function (data) {
+                            //    console.log(data.data)
+                                let datas = []
+                                datas.push(...data.data.categories)
+                                laypage.render({
+                                    elem: 'demo1',
+                                    count: datas.length,
+                                    jump: function (obj) {
+                                        //模拟渲染
+                                        const oTxt = document
+                                            .getElementById(
+                                                'txt')
+                                        oTxt.innerHTML =
+                                            function () {
+                                                var arr = [],
+                                                    thisData =
+                                                    datas
+                                                    .concat()
+                                                    .splice(
+                                                        obj
+                                                        .curr *
+                                                        obj
+                                                        .limit -
+                                                        obj
+                                                        .limit,
+                                                        obj
+                                                        .limit);
+
+                                                layui.each(
+                                                    thisData,
+                                                    function (index,v) {
+                                                       
+                                                        let date =v.date
+                                                        arr.push(`<li class="">
+                                                 <div class="pic">
+                                                 </div>
+                                                 <div class="title">
+                                                     <div class="t-bg"></div>
+                                                     <p class="t t-1"><a href="/article/${v._id}">${v.title}</a>
+                                                     </p>
+                                                     <p class="t t-2">发布时间：<span>${format(date)}</span></p>
+                                                     <p class="t t-3">作者：<span>${v.author.username}</span></p>
+                                                 </div>
+                                                 <div class="article">
+                                                     <div class="articles">
+                                                         ${v.content}
+                                                     </div>
+                                                     <div class="more">
+                                                         <a href="/article/${v._id}">阅读全部</a>
+                                                     </div>
+                                                     <div class="comment">
+                                                         <a href=""><span>${v.commentNum}</span>条评论</a>
+                                                     </div>
+                                                 </div>
+                                             </li>`);
+                                                    });
+                                                return arr.join(
+                                                    '');
+
+
+                                            }();
+                                        let aLi = oTxt.getElementsByTagName('li')
+                                        let len = aLi.length
+                                        for (var j = 0; j <
+                                            len; j++) {
+                                            if (j % 2 == 0) {
+                                                aLi[j]
+                                                    .className =
+                                                    "left"
+                                            } else {
+                                                aLi[j]
+                                                    .className =
+                                                    "right"
+                                            }
+                                        }
+                                    }
+                                });
+                            }
+                        })
+
+
+
+                    });
+
+
+                    function format(timestamp) {
+                        var time = new Date(timestamp);
+                        var year = time.getFullYear();
+                        var month = (time.getMonth() + 1) > 9 && (time.getMonth() + 1) || ('0' + (time.getMonth() +
+                            1))
+                        var date = time.getDate() > 9 && time.getDate() || ('0' + time.getDate())
+                        var hour = time.getHours() > 9 && time.getHours() || ('0' + time.getHours())
+                        var minute = time.getMinutes() > 9 && time.getMinutes() || ('0' + time.getMinutes())
+                        var second = time.getSeconds() > 9 && time.getSeconds() || ('0' + time.getSeconds())
+                        var YmdHis = year + '-' + month + '-' + date + ' ' + hour + ':' + minute + ':' + second;
+                        return YmdHis;
+                    }
+
+                })()
+            </script>
+
+        </ul>
+    </div>
+</div>
+<!-- 分页处理 -->
+<div id="demo1" style="text-align: center;"></div>
+
+</div>
+
+<!--盒子装饰-->
+<div id="decorate2">
+    <svg id="footer-decor" class="decor top" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 100 100"
+        preserveAspectRatio="none">
+        <path class="large left" d="M0 0 L50 50 L0 100" fill="rgba(255,255,255, .1)"></path>
+        <path class="large right" d="M100 0 L50 50 L100 100" fill="rgba(255,255,255, .1)"></path>
+        <path class="medium left" d="M0 0 L50 50 L0 66.6" fill="rgba(255,255,255, .3)"></path>
+        <path class="medium right" d="M100 0 L50 50 L100 66.6" fill="rgba(255,255,255, .3)"></path>
+        <path class="small left" d="M0 0 L50 50 L0 33.3" fill="rgba(255,255,255, .5)"></path>
+        <path class="small right" d="M100 0 L50 50 L100 33.3" fill="rgba(255,255,255, .5)"></path>
+        <path d="M0 0 L50 50 L100 0 L0 0" fill="rgba(255,255,255, .97)"></path>
+        <path d="M48 48 L50 51 L52 48 L48 48" fill="rgba(255,255,255, .97)"></path>
+    </svg>
+</div>
+
+<!--引入layui的模块代码-->
+<script src="/js/index-layui.js"></script>
+
+
+<%#引入ejs模板代码%>
+<%- include("part/footer")%>

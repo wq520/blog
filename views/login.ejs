@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>登录</title>
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all">
+</head>
+
+<body>
+    <div class="layui-tab-content">
+        <form class="layui-form" action="" method="POST">
+            <div class="layui-form-item">
+                <label class="layui-form-label">用户名</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="username" required lay-verify="username" placeholder="请输入用户名"
+                        autocomplete="off" class="layui-input" />
+                </div>
+                <div class="layui-form-mid layui-word-aux">6-18位字符</div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">密码</label>
+                <div class="layui-input-inline">
+                    <input id="reg-password" type="password" name="password" required lay-verify="password"
+                        placeholder="请输入密码" autocomplete="off" class="layui-input" />
+                </div>
+                <div class="layui-form-mid layui-word-aux">6-18位字符</div>
+            </div>
+
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <script src="/layui/layui.js"></script>
+    <script>
+        //Demo
+        layui.use('form', function () {
+            var form = layui.form;
+            var $ = layui.$;
+            //前端矫正
+            form.verify({
+                username: function (value, item) { //value：表单的值、item：表单的DOM对象
+                    if (!new RegExp("^[a-zA-Z0-9_\u4e00-\u9fa5\\s·]+$").test(value)) {
+                        return '用户名不能有特殊字符';
+                    }
+                    if (/(^\_)|(\__)|(\_+$)/.test(value)) {
+                        return '用户名首尾不能出现下划线\'_\'';
+                    }
+                    if (/^\d+\d+\d$/.test(value)) {
+                        return '用户名不能全为数字';
+                    }
+                },
+                password: function (value) {
+                    //var len = value.length;
+                    //if(len<6 || len>18)return "密码格式不正确！";
+                    //数字 字母 _!@#$%^&*()+{}[]-=,.<>?
+                    if (!/^[\da-z_,!@#\$%\^&*()+\[\]{}\-=\.<>?]{6,18}$/i.test(value)) {
+                        return "密码格式不正确！"
+                    }
+                },
+            });
+            //监听提交
+            form.on('submit(formDemo)', function (data) {
+                // console.log(data.field)
+                // layer.alert(JSON.stringify(data.field));
+                $.ajax({
+                    method: 'POST',
+                    data: data.field,
+                    url: '/login',
+                    success: function (data) {
+                        if (data.code === 1) {
+                            layer.alert(data.msg, function () {
+                                location.href = '/usercenters'
+                                // location.reload();
+                            });
+                        } else {
+                            layer.alert(data.msg, function () {
+                                layer.close(layer.index);
+                            });
+                        }
+                    }
+                })
+                return false;
+            });
+        });
+    </script>
+</body>
+
+</html>

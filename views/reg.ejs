@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>注册</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="/layui/css/layui.css" media="all">
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+
+<body>
+
+    <div class="layui-tab-content">
+        <form class="layui-form" action="" method="POST">
+            <div class="layui-form-item">
+                <label class="layui-form-label">用户名</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="username" required lay-verify="username" placeholder="请输入用户名"
+                        autocomplete="off" class="layui-input" />
+                </div>
+                <div class="layui-form-mid layui-word-aux">6-18位字符</div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">密码</label>
+                <div class="layui-input-inline">
+                    <input id="reg-password" type="password" name="password" required lay-verify="password"
+                        placeholder="请输入密码" autocomplete="off" class="layui-input" />
+                </div>
+                <div class="layui-form-mid layui-word-aux">6-18位字符</div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">确认密码</label>
+                <div class="layui-input-inline">
+                    <input id="reg-password" type="password" name="password2" required lay-verify="password2"
+                        placeholder="确认密码" autocomplete="off" class="layui-input" />
+                </div>
+                <div class="layui-form-mid layui-word-aux">6-18位字符</div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="formDemo">立即提交</button>
+                    <button type="reset" class="layui-btn layui-btn-primary">重置</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
+</body>
+<script src="/layui/layui.js"></script>
+<script>
+    //Demo
+    layui.use('form', function () {
+        var form = layui.form;
+        var $ = layui.$;
+        //前端矫正
+        form.verify({
+            age: function (value) {
+                if (value) {
+                    var intValue = parseInt(value);
+                    if (value != intValue) return "年龄不正确";
+                }
+            },
+            tel: function (value) {
+                if (value) {
+                    if (!/^1[345678]\d{9}$/.test(value)) return "手机号格式不正确";
+                }
+            },
+            mail: function (value) {
+                if (value) {
+                    if (!/^[\da-z_]+@[\da-z]+(\.[a-z]+)+$/i.test(value)) return "邮箱格式不正确";
+                }
+            },
+            password: function (value) {
+                //var len = value.length;
+                //if(len<6 || len>18)return "密码格式不正确！";
+                //数字 字母 _!@#$%^&*()+{}[]-=,.<>?
+                if (!/^[\da-z_,!@#\$%\^&*()+\[\]{}\-=\.<>?]{6,18}$/i.test(value)) {
+                    return "密码格式不正确！"
+                }
+            },
+            password2: function (value) {
+                //获取password框的value
+                let val = $("#reg-password").val();
+                //console.log(val);
+                //和确认密码框的value做比较
+                if (value !== val) {
+                    return "两次密码输入不一致！";
+                }
+            }
+        });
+        //监听提交
+        form.on('submit(formDemo)', function (data) {
+            // console.log(data.field)
+            // layer.alert(JSON.stringify(data.field));
+            $.ajax({
+                method: 'POST',
+                data: data.field,
+                url: '/reg',
+                success: function (data) {
+                    if (data.code === 1) {
+                        layer.alert(data.msg, function () {
+                            location.reload();
+                        });
+                    } else {
+                        layer.alert(data.msg, function () {
+                            layer.close(layer.index);
+                        });
+                    }
+                }
+            })
+            return false;
+        });
+    });
+</script>
+
+</html>
