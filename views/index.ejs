@@ -1,11 +1,11 @@
 <%#引入ejs模板代码%>
-<%- include("part/header",{title:"新一的个人博客",css:["index"],js:["part/title","moment"],layui:true})%>
-<div class="mao_box">
+<%- include("part/header",{title:"新一的个人博客",css:["index","style3"],js:["part/title","moment","jquery-2.1.4.min","banner","jquery.lazyload","main_min","index_min"],layui:true})%>
+<!-- <div class="mao_box">
     <div class="mao">
         <div class="mao_head">
             <div class="huawen">
                 <div>
-                    <!--头部花纹——左边橙色-->
+                   
                 </div>
             </div>
         </div>
@@ -67,7 +67,7 @@
             </div>
         </div>
     </div>
-</div>
+</div> -->
 <%- include("part/canvas")%>
 <%- include("part/menu")%>
 
@@ -82,23 +82,151 @@
 
     </div>
 </div>
-<!--盒子装饰-->
-<div id="decorate">
-    <svg id="header-decor" class="decor bottom" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 100 100"
-        preserveAspectRatio="none">
-        <path class="large left" d="M0 0 L50 50 L0 100" fill="rgba(255,255,255, .1)"></path>
-        <path class="large right" d="M100 0 L50 50 L100 100" fill="rgba(255,255,255, .1)"></path>
-        <path class="medium left" d="M0 100 L50 50 L0 33.3" fill="rgba(255,255,255, .3)"></path>
-        <path class="medium right" d="M100 100 L50 50 L100 33.3" fill="rgba(255,255,255, .3)"></path>
-        <path class="small left" d="M0 100 L50 50 L0 66.6" fill="rgba(255,255,255, .5)"></path>
-        <path class="small right" d="M100 100 L50 50 L100 66.6" fill="rgba(255,255,255, .5)"></path>
-        <path d="M0 99.9 L50 49.9 L100 99.9 L0 99.9" fill="rgba(255,255,255, .97)"></path>
-        <path d="M48 52 L50 49 L52 52 L48 52" fill="rgba(255,255,255, .97)"></path>
-    </svg>
-</div>
+<!-- banner轮播 -->
+<section class="mod-banner" id="js_banner">
+    <a href="" target="_blank" class="mod-banner__img banner_1" id="banner_img"
+        style="background:url('images/banner-3.jpg') center center no-repeat;"></a>
+    <div class="mod-banner__navi">
+        <div class="js_banner_nav mod-banner_nav"></div>
+        <span class="mod-banner__nav-dot"><canvas id="dotCanvas"></canvas></span>
+    </div>
+    <div class="mod-banner__tool">
+        <span class="js_banner_prev mod-banner__tool-prev">
+            <span class="mod-banner__tool-white"></span>
+            <span class="mod-banner__tool-shadow"></span>
+        </span>
+        <span class="js_banner_next mod-banner__tool-next">
+            <span class="mod-banner__tool-white"></span>
+            <span class="mod-banner__tool-shadow"></span>
+        </span>
+    </div>
+</section>
+<!-- 雪花start -->
+<div id="snowMask"></div>
+<!-- 雪花end -->
+<script type="text/javascript">
+    //turnEffect（翻转）boomEffect（爆炸）pageEffect（翻页）skewEffect（扭曲）cubeEffect（立方体）
+    var flippingMode = ['turnEffect', 'boomEffect', 'pageEffect', 'skewEffect', 'cubeEffect'];
+    var randomNum = Math.floor(Math.random() * 3);
+    var banner = new Banner({
+        banner: '#banner_img',
+        index: 0,
+        autoplay: 8000,
+        width: 1200,
+        height: 300,
+        images: [{
+                url: '/images/banner-1.jpg',
+                link: ''
+            }, {
+                url: '/images/banner-2.jpg',
+                link: ''
+            }, {
+                url: '/images/banner-3.jpg',
+                link: ''
+            }, {
+                url: '/images/banner-4.jpg',
+                link: ''
+            }, {
+                url: '/images/banner-5.jpg',
+                link: ''
+            },
+            {
+                url: '/images/banner-6.jpg',
+                link: ''
+            }
+        ],
+
+        preloadImages: true, // 预加载所有图片
+
+        // 分页及控制
+        pagination: '.js_banner_nav', // 分页dom
+        paginationClick: true, // 分页是否可点击
+        prevButton: '.js_banner_prev', // 下一张dom
+        nextButton: '.js_banner_next', // 上一张dom
+        Effects: {
+            'prev': 'turnEffect',
+            'next': 2 == '' ? flippingMode[parseInt(Math.random() * (5), 10)] : flippingMode[2 - 1],
+            'navi': 'pageEffect'
+        },
+    });
+</script>
+
 <!--内容-->
 <div id="content">
-    <div class="content-main">
+    <div class="content-main continar-left">
+        <!-- PC正文3d导航start -->
+        <div class="mod-index__feature">
+            <div class="img_list_6pic ui-clearfix">
+                <div class="img_box" id="img_box">
+
+                </div>
+                <a href="" class="small_pic_wrap carousel_pic_wrap small_pic_wrap_small word_display" target="_blank">
+                    <div class="carousel_small_str txt_bg01">
+                        <h3 class="img_txt_title">404</h3>
+                        <p class="img_p">路<br>在何方</p>
+                    </div>
+                    <img class="carousel_small_pic" width="110" height="85" alt="新一个人博客 - 关注最前沿的web前端开发技术博客网站"
+                        src="/images/404.jpg">
+                </a>
+                <a href="" class="small_pic_wrap carousel_pic_wrap small_pic_wrap_small" target="_blank">
+                    <div class="carousel_small_str txt_bg02">
+                        <h3 class="img_txt_title">绘画板</h3>
+                        <p class="img_p">描绘<br>在故事里的风景</p>
+                    </div>
+                    <img class="carousel_small_pic" width="110" height="85" alt="新一个人博客 - 关注最前沿的web前端开发技术博客网站"
+                        src="/images/painting.jpg">
+                </a>
+                <a href="" class="small_pic_wrap carousel_pic_wrap small_pic_wrap_long word_display" target="_blank">
+                    <div class="carousel_small_str txt_bg03">
+                        <h3 class="img_txt_title">千里共良宵</h3>
+                        <p class="img_p">岁月<br>在电波中流淌</p>
+                    </div>
+                    <img class="carousel_small_pic" src="/images/happy_night.jpg" width="160" height="85"
+                        alt="新一个人博客 - 关注最前沿的web前端开发技术博客网站">
+                </a>
+                <a href="" class="small_pic_wrap carousel_pic_wrap small_pic_wrap_small word_display" target="_blank">
+                    <div class="carousel_small_str txt_bg02">
+                        <h3 class="img_txt_title">忙碌</h3>
+                        <p class="img_p">在喧闹<br>又孤独的城市</p>
+                    </div>
+                    <img class="carousel_small_pic" width="110" height="85" src="/images/be_busy.jpg"
+                        alt="新一个人博客 - 关注最前沿的web前端开发技术博客网站">
+                </a>
+                <a href="" target="_blank" class="small_pic_wrap carousel_pic_wrap small_pic_wrap_long">
+                    <div class="carousel_small_str txt_bg04">
+                        <h3 class="img_txt_title">MV</h3>
+                        <p class="img_p">时光<br>在画面里穿梭</p>
+                    </div>
+                    <img class="carousel_small_pic" src="/images/time.jpg" width="160" height="85"
+                        alt="新一个人博客 - 关注最前沿的web前端开发技术博客网站">
+                </a>
+                <a href="" class="small_pic_wrap carousel_pic_wrap small_pic_wrap_small word_display" target="_blank">
+                    <div class="carousel_small_str txt_bg05">
+                        <h3 class="img_txt_title">Music</h3>
+                        <p class="img_p">心情<br>在音乐中释放</p>
+                    </div>
+                    <img class="carousel_small_pic" width="110" height="85" src="/images/mood_music.jpg"
+                        alt="新一个人博客 - 关注最前沿的web前端开发技术博客网站">
+                </a>
+                <a href="" class="small_pic_wrap carousel_pic_wrap small_pic_wrap_small" target="_blank">
+                    <div class="carousel_small_str txt_bg06">
+                        <h3 class="img_txt_title">情人节</h3>
+                        <p class="img_p">一个单身<br>程序员的史诗</p>
+                    </div>
+                    <img class="carousel_small_pic" width="110" height="85" src="/images/valentine_day.jpg"
+                        alt="新一个人博客 - 关注最前沿的web前端开发技术博客网站">
+                </a>
+                <a href="" class="small_pic_wrap carousel_pic_wrap small_pic_wrap_small" target="_blank">
+                    <div class="carousel_small_str txt_bg06">
+                        <h3 class="img_txt_title">直男癌</h3>
+                        <p class="img_p">花花世界<br>谁在鄙视直男癌</p>
+                    </div>
+                    <img class="carousel_small_pic" width="110" height="85" src="/images/straight_man.jpg"
+                        alt="新一个人博客 - 关注最前沿的web前端开发技术博客网站">
+                </a>
+            </div>
+        </div>
+        <!-- PC正文3d导航end -->
         <ul class="content-main-left" id="txt">
 
             <script>
@@ -115,7 +243,7 @@
                             url: "/",
                             data: {},
                             success: function (data) {
-                            //    console.log(data.data)
+                                //    console.log(data.data)
                                 let datas = []
                                 datas.push(...data.data.categories)
                                 laypage.render({
@@ -144,9 +272,9 @@
 
                                                 layui.each(
                                                     thisData,
-                                                    function (index,v) {
-                                                       
-                                                        let date =v.date
+                                                    function (index, v) {
+
+                                                        let date = v.date
                                                         arr.push(`<li class="">
                                                  <div class="pic">
                                                  </div>
@@ -217,6 +345,200 @@
 
         </ul>
     </div>
+    <section class="continar-right">
+        <div class="aside">
+            <h3>博客简介</h3>
+            <div><img src="/images/article/3.gif" width="308" height="173" alt=""></div>
+            <div class="textwidget">
+                <p class="clearfix">
+                    新一博客: xinyi.gfwq520.com，一个关注Web前端开发技术、关注用户体验、坚持更多原创实战教程的个人网站，愿景：成为宇宙中最具有代表性的前端博客，期待您的参与，主题源码 <a
+                        rel="nofollow" target="_blank" href="https://github.com/wq520/blog"><img
+                            src='/images/art_blog.svg' style='vertical-align: text-top;'></img></a> </p>
+            </div>
+        </div>
+
+        <!-- 热门文章start -->
+        <div class="widget hot_rticles">
+            <div class="daily-list">
+                <h3 class="widget-title"><a href="javascript:()"><i class="iconfont icon-web__xinshou"></i>最近更新</a>
+                </h3>
+
+                <ul id="zjgx">
+                </ul>
+            </div>
+        </div>
+        <script>
+            (function () {
+                $.ajax({
+                    method: "post",
+                    url: "/",
+                    data: {},
+                    success: function (data) {
+                        const zjgx = document.getElementById('zjgx')
+                        let htm = ''
+                        data.data.contents.forEach((v, i) => {
+                            let imgs = ['/images/img/1.jpg', '/images/img/2.gif',
+                                '/images/img/3.jpg', '/images/img/4.png',
+                                '/images/img/5.gif'
+                            ]
+                            htm += `<li>
+                                <a href="/article/${v._id}">
+                                    <img width="220" height="140" src="${imgs[i]}"
+                                        class="attachment-post-thumbnail size-post-thumbnail wp-post-image" alt="" /> </a>
+                                <div class="hot_text">
+                                    <a href="/article/${v._id}" class=" hot_title">
+                                        ${v.title} </a>
+                                    <time class="hot_time">${format(v.date)} <span>阅读(${v.readNum})</span>
+                                    </time>
+                                </div>
+                            </li>`
+                        })
+                        zjgx.innerHTML = htm
+
+                        function format(timestamp) {
+                            var time = new Date(timestamp);
+                            var year = time.getFullYear();
+                            var month = (time.getMonth() + 1) > 9 && (time.getMonth() + 1) || ('0' + (
+                                time.getMonth() +
+                                1))
+                            var date = time.getDate() > 9 && time.getDate() || ('0' + time.getDate())
+                            var YmdHis = year + '年' + month + '月' + date + '日';
+                            return YmdHis;
+                        }
+                    }
+                })
+
+
+            })()
+        </script>
+        <!-- 热门文章end -->
+
+        <!-- 随机文章start -->
+        <div class="widget mouseover">
+            <div class="daily-list">
+                <h3 class="widget-title"><a href="javascript:()"><i class="iconfont icon-suiji-copy"></i>随机文章</a>
+                </h3>
+                <ul id="sjwz">
+                </ul>
+            </div>
+        </div>
+        <script>
+            (function () {
+                $.ajax({
+                    method: "post",
+                    url: "/sjarticle",
+                    data: {},
+                    success: function (data) {
+                        if (!Array.prototype.derangedArray) {
+                            Array.prototype.derangedArray = function () {
+                                for (var j, x, i = this.length; i; j = parseInt(Math.random() * i),
+                                    x = this[--i], this[i] = this[j], this[j] = x);
+                                return this;
+                            };
+                        }
+
+                        const sjwz = document.getElementById('sjwz')
+                        const imgBox = document.getElementById('img_box')
+                        let htm = ''
+                        let htm2
+                        data.data.categories.derangedArray().forEach((v, i) => {
+                            if (i < 10) {
+                                htm += `<li>
+                                    <em>${i+1}</em>
+                                    <a href="/article/${v._id}">
+                                        ${v.title} </a>
+                                </li>`
+                            } else {
+                                return
+                            }
+                            if (i < 1) {
+                                htm2 = `<a href="/article/${v._id}" target="_blank">
+                                    <img src="/images/record.jpg" width="280" height="180"
+                                        alt="新一个人博客 - 关注最前沿的web前端开发技术博客网站" class="ui-d-b">
+                                    <div class="img_bg"></div>
+                                    <div class="img_txt">
+                                        <p class="img_title">${v.title}</p>
+                                    </div>
+                                    <i class="light"></i>
+                                </a>`
+                            } else {
+                                return
+                            }
+                        })
+                        sjwz.innerHTML = htm
+                        imgBox.innerHTML = htm2
+                    }
+                })
+
+
+            })()
+        </script>
+        <!-- 随机文章end -->
+
+        <!-- 热门标签start -->
+        <div class="classif">
+            <h3 class="widget-title"><a href="javascript:()"><i
+                        class="iconfont icon-leimupinleifenleileibie"></i>热门标签</a></h3>
+            <div class="items">
+                <a target="_blank" href="https://www.caniuse.com/">caniuse兼容性</a>
+                <a target="_blank" href="https://cdnnext.console.aliyun.com/refresh/record">阿里CDN</a>
+                <a target="_blank" href="https://www.bootcdn.cn/">CDN大全</a>
+                <a target="_blank" href="https://github.com/weipxiu">博主Github</a>
+                <a target="_blank" href="https://tongji.baidu.com/web/homepage/index">百度统计</a>
+                <a target="_blank" href="https://ziyuan.baidu.com/linksubmit/index">百度收录</a>
+                <a target="_blank" href="http://tool.chinaz.com/KeyWords/">关键词排名</a>
+                <a target="_blank" href="http://caibaojian.com/30-seconds-of-css/#sibling-fade">经典css片段</a>
+                <a target="_blank" href="http://momentjs.cn/">时间戳格式化</a>
+                <a target="_blank" href="https://github.com/shengxinjing/programmer-job-blacklist">全国黑企名单</a>
+                <a target="_blank"
+                    href="https://docs.qq.com/sheet/DdkZzbElOT0VrV0dD?ADUIN=937018802&ADSESSION=1539913469&ADTAG=CLIENT.QQ.5587_.0&ADPUBNO=26847&ADUIN=1353257412&ADSESSION=1539911391&ADTAG=CLIENT.QQ.5593_.0&ADPUBNO=26858&tab=BB08J2">武汉黑企名单</a>
+                <a target="_blank" href="https://996.icu/">996.ICU火了</a>
+                <a target="_blank" href="https://github.com/stephentian/33-js-concepts">Js33个概念</a>
+                <a target="_blank" href="https://github.com/Tencent/vConsole">vConsole</a>
+                <a target="_blank" href="https://github.com/wendux/DSBridge-IOS">DSBridge</a>
+                <a target="_blank" href="https://github.com/rachmanzz/vue-inview">DOM元素进屏</a>
+                <a target="_blank" href="http://www.shareinstall.net/">Shareinstall</a>
+                <a target="_blank" href="https://getman.cn/">Http接口测试</a>
+                <a target="_blank" href="https://juejin.im/post/5d23e750f265da1b855c7bbe">前端面试100问</a>
+                <a target="_blank"
+                    href="https://segmentfault.com/a/1190000019609331?utm_medium=hao.caibaojian.com&utm_source=hao.caibaojian.com&share_user=1030000000178452">Vue.js200问</a>
+                <a target="_blank" href="https://www.bilibili.com/video/av55600839/?p=10">Node.js上线</a>
+                <a target="_blank" href="https://www.lodashjs.com">lodash.js</a>
+                <a target="_blank" href="https://www.youcompress.com/">视频压缩</a>
+                <a target="_blank" href="https://www.cnblogs.com/YuKiee/p/9681151.html">vue视图更新</a> </div>
+        </div>
+        <!-- 热门标签end -->
+
+        <!-- 友情链接start -->
+        <div class="widget friendship">
+            <div class="daily-list">
+                <h3 class="widget-title"><a href="javascript:()"><i class="iconfont icon-pengyouwang"></i>友情链接</a>
+                </h3>
+                <p>他们同样是一群网虫，却不是每天泡在网上游走在淘宝和网游之间、刷着本来就快要透支的信用卡。他们或许没有踏出国门一步，但同学却不局限在一国一校，而是遍及全球！<a
+                        href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&amp;email=1353257412@qq.com"
+                        target="_blank">申请交换友链</a>
+                </p>
+                <ul class="friendsChain">
+                    <li><a href="http://www.menvscode.com/" target="_blank">menVScode</a></li>
+                    <li><a href="https://www.vanhua.cn/" target="_blank">VanHua 万花</a></li>
+                    <li><a href="https://www.huanggr.cn/" target="_blank">web前端开发</a></li>
+                    <li><a href="http://www.woshipm.com/" target="_blank">人人都是产品经理</a></li>
+                    <li><a href="https://www.daimadog.com/" target="_blank">代码狗</a></li>
+                    <li><a href="https://fengkui.net" target="_blank">冯奎博客</a></li>
+                    <li><a href="https://www.wujiabk.com" target="_blank">吴佳博客</a></li>
+                    <li><a href="http://www.yeyulingfeng.com" target="_blank">夜雨聆风</a></li>
+                    <li><a href="http://www.mxxia.com/" target="_blank">梦想霞个人博客</a></li>
+                    <li><a href="http://www.wcanrong.com" target="_blank">璀灿星辰个人博客</a></li>
+                    <li><a href="http://www.tianshan277.com" target="_blank">田珊珊个人博客</a></li>
+                    <li><a href="http://www.mybj123.com/" target="_blank">码云笔记</a></li>
+                    <li><a href="http://www.old-wan.com/" target="_blank">西安网站优化</a></li>
+                    <li><a href="https://www.xuanmo.xin/" target="_blank">轩陌博客</a></li>
+                </ul>
+            </div>
+        </div>
+        <!-- 友情链接end -->
+
+    </section>
 </div>
 <!-- 分页处理 -->
 <div id="demo1" style="text-align: center;"></div>

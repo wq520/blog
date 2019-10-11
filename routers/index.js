@@ -50,7 +50,7 @@ module.exports = function (req, res) {
                 _id: -1
             }).limit(data.limit).skip(skip).populate({ // mongodb用于连表查询
                 path: 'author',
-                select: '_id username'
+                select: '_id username photo'
             }).sort({
                 addTime: -1
             });

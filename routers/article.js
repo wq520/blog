@@ -24,7 +24,8 @@ router.post("/", (req, res) => {
         content,
         tags: tags.join(","),
         author: req.session.userInfo._id,
-        commentNum: 0
+        commentNum: 0,
+        readNum: 0
     }).then((data) => {
         if (data) {
             res.send({
@@ -48,6 +49,19 @@ router.post("/", (req, res) => {
 //访问文章页面
 router.get("/:_id", (req, res) => {
     let _id = req.params._id;
+    // 更新当前文章的阅读量
+    article.update({
+        _id: req.params._id
+    }, {
+        $inc: {
+            readNum: 1
+        }
+    }, err => {
+        if (err) return console.log(err);
+        console.log('阅读更新成功');
+
+
+    })
     if (!_id) {
         res.render("article", {
             code: 0,

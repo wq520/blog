@@ -22,7 +22,8 @@ let articleSchema = new Schema({
         type: Schema.Types.ObjectId,
         ref: "user"
     },
-    commentNum: Number
+    commentNum: Number,
+    readNum: Number
 
 });
 

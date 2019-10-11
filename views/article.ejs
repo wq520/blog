@@ -1,5 +1,5 @@
 <%#引入ejs模板代码%>
-<%- include("part/header",{title:"新一的个人博客",css:["index"],js:["part/title","moment"],layui:true})%>
+<%- include("part/header",{title:"新一的个人博客",css:["index","style3"],js:["part/title","moment","jquery.lazyload","main_min"],layui:true})%>
 <%- include("part/canvas")%>
 <%- include("part/menu")%>
 <!--头像-->
@@ -13,7 +13,9 @@
 
     </div>
 </div>
-
+<!-- 雪花start -->
+<div id="snowMask"></div>
+<!-- 雪花end -->
 <%if(code===0){%>
 <p><%=msg%></p>
 5秒后返回 <a href="/">首页</a>

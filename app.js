@@ -9,7 +9,7 @@ const mongooseSession = require("connect-mongo")(session)
 
 //启动数据库
 mongoose.connect("mongodb://localhost:27017/blog", {
-       useUnifiedTopology: true
+        useUnifiedTopology: true
     })
     .then(() => {
         console.log("数据库连接成功")
@@ -69,6 +69,7 @@ app.get('/', (req, res) => {
     res.render('index')
 })
 app.post("/", require('./routers/index'));
+app.post("/sjarticle", require('./routers/sjarticle'));
 //注册 路由
 app.post("/reg", require("./routers/reg"));
 //登录 路由

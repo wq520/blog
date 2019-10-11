@@ -1,5 +1,5 @@
 <%#引入ejs模板代码%>
-<%- include("part/header",{title:"新一的个人博客",css:["index","style","style2"],js:["part/title","pixi.min","tinycolor.min","index"],layui:true})%>
+<%- include("part/header",{title:"新一的个人博客",css:["index","style","style2","style3"],js:["part/title","pixi.min","tinycolor.min","index","jquery.lazyload","main_min"],layui:true})%>
 <%- include("part/canvas")%>
 <%- include("part/menu")%>
 
@@ -28,6 +28,9 @@
         <%}%>
     </div>
 </div>
+<!-- 雪花start -->
+<div id="snowMask"></div>
+<!-- 雪花end -->
 <!--盒子装饰-->
 <div id="decorate">
     <svg id="header-decor" class="decor bottom" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 100 100"

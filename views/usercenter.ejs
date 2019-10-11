@@ -1,5 +1,5 @@
 <%#引入ejs模板%>
-<%- include("part/header",{title:"个人中心",css:["index"],js:["part/title"],layui:true})%>
+<%- include("part/header",{title:"个人中心",css:["index","style3"],js:["part/title","jquery.lazyload","main_min"],layui:true})%>
 <%- include("part/canvas")%>
 
 
@@ -18,6 +18,9 @@
     }
 </style>
 <link rel="stylesheet" href="/css/usercenter.css">
+<!-- 雪花start -->
+<div id="snowMask"></div>
+<!-- 雪花end -->
 <div id="usercenter">
     <!--//导航条-->
     <ul class="layui-nav layui-bg-cyan">
