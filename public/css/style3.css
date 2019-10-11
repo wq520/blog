@@ -2054,14 +2054,14 @@ img:hover {
 }
 
 .widget ul li:hover h3,
-.widget ul li:hover span {
+.widget ul li:hover a {
     color: #1890ff;
     -webkit-transition: all .35s;
     -o-transition: all .35s;
     transition: all .35s
 }
 
-.widget ul li:hover span.daily-title:before {
+.widget ul li:hover a:before {
     background: #1890ff;
     border: 2px solid #1890ff;
     -webkit-transition: all .35s;
