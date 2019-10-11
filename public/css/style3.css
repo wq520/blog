@@ -410,6 +410,7 @@ img:hover {
 
 #js_banner {
     height: 300px;
+    margin-top: 80px;
 
 }
 
@@ -859,7 +860,7 @@ img:hover {
     transform: rotateX(-89deg);
     transform: rotateX(0)\9;
     margin-top: 2px;
-    margin-top: 0\9
+    margin-top: 0\9;
 }
 
 .nav ul li a span:nth-of-type(2) {
@@ -909,6 +910,14 @@ img:hover {
     opacity: 0;
     visibility: hidden;
     border-top: 3px solid #1890ff
+}
+
+.iconfont {
+    font-family: "iconfont" !important;
+    font-size: 16px;
+    font-style: normal;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 .nav .nav-min:hover {
