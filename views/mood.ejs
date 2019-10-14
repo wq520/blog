@@ -1,0 +1,180 @@
+<%#引入ejs模板代码%>
+<%- include("part/header",{title:"新一的个人博客",css:["index","style3","style4","animate.min","font-awesome.min"],js:["part/title","moment","jquery-2.1.4.min","jquery.lazyload","index_min","main_min"],layui:true})%>
+
+<%- include("part/canvas")%>
+<%- include("part/menu")%>
+
+<!-- 雪花start -->
+<div id="snowMask"></div>
+<!-- 雪花end -->
+
+<!--内容-->
+<div id="container">
+
+    <div class="outer">
+        <section id="main" class="body-wrap">
+            <script>
+                (function article() {
+
+                    layui.use(['laypage', 'layer'], function () {
+
+                        var laypage = layui.laypage,
+                            layer = layui.layer;
+
+                        //测试数据
+                        $.ajax({
+                            method: "post",
+                            url: "/mood",
+                            data: {},
+                            success: function (data) {
+                                //    console.log(data.data)
+                                let datas = []
+                                datas.push(...data.data.categories)
+                                laypage.render({
+                                    elem: 'demo1',
+                                    count: datas.length,
+                                    jump: function (obj) {
+                                        //模拟渲染
+                                        const oMain = document
+                                            .getElementById(
+                                                'main')
+                                        oMain.innerHTML =
+                                            function () {
+                                                var arr = [],
+                                                    thisData =
+                                                    datas
+                                                    .concat()
+                                                    .splice(obj.curr * obj.limit -
+                                                        obj.limit, obj.limit);
+
+                                                layui.each(
+                                                    thisData,
+                                                    function (index, v) {
+
+                                                        let date = v.date
+                                                        arr.push(`<article id="post-the-first"
+                                                 class="article article-type-post animated lightSpeedIn" itemscope=""
+                                                 itemprop="blogPost" data-sr-id="2"
+                                                 style="visibility: visible;  -webkit-transform: translateY(0) scale(1); opacity: 1;transform: translateY(0) scale(1); opacity: 1;-webkit-transition: -webkit-transform 0s cubic-bezier( 0.6, 0.2, 0.1, 1 ) 0s, opacity 0s cubic-bezier( 0.6, 0.2, 0.1, 1 ) 0s; transition: transform 0s cubic-bezier( 0.6, 0.2, 0.1, 1 ) 0s, opacity 0s cubic-bezier( 0.6, 0.2, 0.1, 1 ) 0s; ">
+                                                 <div class="article-inner">
+
+                                                     <header class="article-header">
+
+
+                                                         <h1 itemprop="name">
+                                                             <a class="article-title"
+                                                                 href="/article/${v._id}">${v.title}</a>
+                                                         </h1>
+                                                         <span class="header-cate">
+                                                             <i class="fa fa-map-marker"></i>
+                                                             <a
+                                                                 href="/article/${v._id}">${v.tags}</a>
+                                                         </span>
+
+                                                     </header>
+
+                                                     <div class="article-entry " itemprop="articleBody">
+
+                                                         <div class="article-img">
+                                                             <a href="/article/${v._id}">
+
+                                                                 <img src="/images/web.jpg" alt="${v.title}"
+                                                                     title="${v.title}">
+
+                                                             </a>
+                                                         </div>
+                                                         <div class="article-feed">
+                                                             <p>
+                                                                ${v.content}
+                                                             </p>
+                                                         </div>
+                                                          </div>
+                                                        <footer class="article-footer">
+
+                                                            <ul class="article-footer-menu">
+
+                                                                <li><i class="fa fa-calendar"></i>${format(date)}</li>
+
+
+                                                                <li class="article-footer-tags">
+                                                                    <i class="fa fa-tags"></i>
+
+                                                                    <a href="/article/${v._id}"
+                                                                        class="color3">${v.tags}</a>
+
+                                                                </li>
+
+                                                            </ul>
+
+                                                            <a href="/article/${v._id}"
+                                                                class="article-more-link">more&gt;&gt;</a>
+
+                                                        </footer>
+                                                 </div>
+                                             </article>`)
+                                                    });
+                                                return arr.join(
+                                                    '');
+
+
+                                            }();
+                                    }
+                                });
+                            }
+                        })
+
+
+
+                    });
+
+
+                    function format(timestamp) {
+                        var time = new Date(timestamp);
+                        var year = time.getFullYear();
+                        var month = (time.getMonth() + 1) > 9 && (time.getMonth() + 1) || ('0' + (time
+                            .getMonth() +
+                            1))
+                        var date = time.getDate() > 9 && time.getDate() || ('0' + time.getDate())
+                        var hour = time.getHours() > 9 && time.getHours() || ('0' + time.getHours())
+                        var minute = time.getMinutes() > 9 && time.getMinutes() || ('0' + time.getMinutes())
+                        var second = time.getSeconds() > 9 && time.getSeconds() || ('0' + time.getSeconds())
+                        var YmdHis = year + '-' + month + '-' + date;
+                        return YmdHis;
+                    }
+
+                })()
+            </script>
+
+        </section>
+    </div>
+    <div id="particles">
+        <canvas class="particles-js-canvas-el" width="1430" height="708" style="width: 100%; height: 100%;">
+        </canvas>
+    </div>
+    <!-- 分页处理 -->
+    <div id="demo1" style="text-align: center;"></div>
+
+</div>
+
+<!--盒子装饰-->
+<div id="decorate2">
+    <svg id="footer-decor" class="decor top" xmlns="http://www.w3.org/2000/svg" version="1.1" viewBox="0 0 100 100"
+        preserveAspectRatio="none">
+        <path class="large left" d="M0 0 L50 50 L0 100" fill="rgba(255,255,255, .1)"></path>
+        <path class="large right" d="M100 0 L50 50 L100 100" fill="rgba(255,255,255, .1)"></path>
+        <path class="medium left" d="M0 0 L50 50 L0 66.6" fill="rgba(255,255,255, .3)"></path>
+        <path class="medium right" d="M100 0 L50 50 L100 66.6" fill="rgba(255,255,255, .3)"></path>
+        <path class="small left" d="M0 0 L50 50 L0 33.3" fill="rgba(255,255,255, .5)"></path>
+        <path class="small right" d="M100 0 L50 50 L100 33.3" fill="rgba(255,255,255, .5)"></path>
+        <path d="M0 0 L50 50 L100 0 L0 0" fill="rgba(255,255,255, .97)"></path>
+        <path d="M48 48 L50 51 L52 48 L48 48" fill="rgba(255,255,255, .97)"></path>
+    </svg>
+</div>
+
+<!--引入layui的模块代码-->
+<script src="/js/index-layui.js"></script>
+<script src="/js/particles.min.js"></script>
+<script src="/js/particles.js"></script>
+
+<%#引入ejs模板代码%>
+<%- include("part/footer")%>

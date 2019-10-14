@@ -12,7 +12,10 @@ router.post("/", (req, res) => {
         content
     } = req.body;
 
-    if (!(title && tags.length && content)) {
+    // console.log(req.body);
+
+
+    if (!(title && content)) {
         return res.send({
             code: 0,
             msg: "文章格式错误"
@@ -58,9 +61,6 @@ router.get("/:_id", (req, res) => {
         }
     }, err => {
         if (err) return console.log(err);
-        console.log('阅读更新成功');
-
-
     })
     if (!_id) {
         res.render("article", {
@@ -71,14 +71,20 @@ router.get("/:_id", (req, res) => {
         article.findById(_id).populate("author")
             .then(data => {
                 if (data) {
+                    let time = format(data.date)
                     comment.find({
                             article: _id
-                        }).populate("author")
+                        }).populate({
+                            path: 'author',
+                            select: '_id username userInfo.photo'
+                        })
                         .then(commentData => {
                             res.render("article", {
                                 code: 1,
                                 data,
-                                commentData
+                                time,
+                                commentData,
+                                format
                             });
                         })
                         .catch(e => {
@@ -104,5 +110,19 @@ router.get("/:_id", (req, res) => {
 
     }
 });
+
+function format(timestamp) {
+    var time = new Date(timestamp);
+    var year = time.getFullYear();
+    var month = (time.getMonth() + 1) > 9 && (time.getMonth() + 1) || ('0' + (time
+        .getMonth() +
+        1))
+    var date = time.getDate() > 9 && time.getDate() || ('0' + time.getDate())
+    var hour = time.getHours() > 9 && time.getHours() || ('0' + time.getHours())
+    var minute = time.getMinutes() > 9 && time.getMinutes() || ('0' + time.getMinutes())
+    var second = time.getSeconds() > 9 && time.getSeconds() || ('0' + time.getSeconds())
+    var YmdHis = year + '-' + month + '-' + date + ' ' + hour + ':' + minute + ':' + second;
+    return YmdHis;
+}
 
 module.exports = router;

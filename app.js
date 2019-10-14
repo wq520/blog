@@ -130,5 +130,19 @@ app.post("/canvas", (req, res) => {
     })
 });
 
+//碎言碎语
+app.get('/message', require('./routers/message'))
+app.post("/message", (req, res) => {
+    res.send({
+        login: !!req.session.userInfo
+    })
+});
+
+// 心情小镇
+app.get('/mood', (req, res) => {
+    res.render('mood')
+})
+app.post("/mood", require('./routers/mood'));
+
 // 文章列表分页 路由
 app.get("/page/:id", require('./routers/index'))

@@ -75,9 +75,8 @@
                         //alert( 1 )
                         if (data.code === 1) {
                             //登录成功的话，跳转到用户中心页面
-
-
-                            location.href = "/usercenter";
+                            var url = window.location.href;
+                            location.href = url
                         } else if (data.code === 0) {
                             //登录失败 ，再点弹窗的确定按钮的话，把弹窗关了
                             layer.close(layer.index);

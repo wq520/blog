@@ -22,7 +22,7 @@
 
  <header class="header">
      <div
-         style="height:2px;background:url(images/header_bj.gif); animation: hue 20s infinite linear;overflow: hidden; width:100%;">
+         style="height:2px;background:url(/images/header_bj.gif); animation: hue 20s infinite linear;overflow: hidden; width:100%;">
      </div>
      <div class="header-body">
          <div class="header-conter">
@@ -36,24 +36,21 @@
                      <p>HTML5、CSS3、JavaScript</p>
                  </div>
                  <ul id="nav_list" class="music-nav">
-                     <li id="menu-item-3190"
+                     <li
                          class="menu-item menu-item-type-custom menu-item-object-custom current-menu-item current_page_item menu-item-3190">
                          <a href="/" aria-current="page">首页</a></li>
-                     <li id="menu-item-3601"
-                         class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-3601">
-                         <a>心情小镇</a></li>
+                     <li class="menu-item menu-item-type-taxonomy menu-item-object-category menu-item-3601">
+                         <a id="mood">心情小镇</a></li>
                      <li id="menu-item-3224"
                          class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3224"><a
                              href="javascript:" id="contact">时光机</a></li>
-                     <li id="menu-item-3279"
+                     <li
                          class="menu-item menu-item-type-custom menu-item-object-custom menu-item-has-children menu-item-3279">
-                         <a>作品欣赏</a>
+                         <a id="canvas">作品欣赏</a>
                      </li>
-                     <li id="menu-item-3232"
-                         class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3232">
-                         <a>碎言碎语</a></li>
-                     <li id="menu-item-3233"
-                         class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3232"><a
+                     <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3232">
+                         <a id="message">碎言碎语</a></li>
+                     <li class="menu-item menu-item-type-post_type menu-item-object-page menu-item-3232"><a
                              id="usercenter" href="javascript:">个人中心</a></li>
 
                  </ul>
@@ -170,7 +167,9 @@
              $menuSign = $menu.find(".menu-sign"),
              $close = $menu.find(".sign-center-close"),
              $contact = $("#contact"),
-             $canvas = $("#canvas")
+             $canvas = $("#canvas"),
+             $message = $("#message"),
+             $mood = $("#mood")
 
          $menuSwitch.on("click", function () {
              $menu.toggleClass("show");
@@ -214,6 +213,30 @@
                  success: function (data) {
 
                      location.href = "/canvas";
+                 }
+             });
+         });
+
+         $message.on("click", function () {
+             $.ajax({
+                 method: "POST",
+                 url: "/message",
+                 dataType: "json",
+                 success: function (data) {
+
+                     location.href = "/message";
+                 }
+             });
+         });
+
+         $mood.on("click", function () {
+             $.ajax({
+                 method: "POST",
+                 url: "/mood",
+                 dataType: "json",
+                 success: function (data) {
+
+                     location.href = "/mood";
                  }
              });
          });

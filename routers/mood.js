@@ -25,10 +25,9 @@ module.exports = function (req, res) {
         // .limit(5)
         .populate({ // mongodb用于连表查询
             path: 'author',
-            select: '_id username userInfo.photo'
+            select: '_id username'
         })
         .then((categories) => {
-
             data.categories = categories;
             // //读取内容的总记录数
             // return article.countDocuments();

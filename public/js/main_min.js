@@ -61,7 +61,9 @@ $(function () {
                 um_id: e,
                 um_action: t
             };
-
+        return $.post("/wp-admin/admin-ajax.php", n, function (e) {
+            $(i).html(e)
+        }), !1
     }, $(document).on("click", ".favorite", function () {
         $(this).postLike()
     }), document.getElementById("menu"), document.oncontextmenu = function (e) {
@@ -69,54 +71,48 @@ $(function () {
     };
     var s = !0;
     $(".navto-search a").click(function () {
-            s = s ? ($(".header").css("z-index", "11"), !1) : ($(".header").css("z-index", "10"), !0), $(".site-search.active.pc").stop(!0, !0).slideToggle(150), $(".site-search.active.pc").find("input").focus(), $(this).find("i").toggleClass("icon-guanbi3")
-        }),
-        $(".header").addClass("Top"), 1 != localStorage.getItem("off_y") ? ($(".nav ul.music-nav li > p").css("opacity", "0"), localStorage.setItem("off_y", 0)) : ($(".nav ul.music-nav li > p").css("opacity", "1"), localStorage.setItem("off_y", 1), $(".mod-header_music-icon").addClass("hover")), $(".mod-header_music-icon").click(function () {
-            1 != localStorage.getItem("off_y") ? ($(this).addClass("hover"), $(".nav ul.music-nav li > p").css("opacity", "1"), localStorage.setItem("off_y", 1), layer.msg("全站音频已开启~", {
-                    time: 2e3
-                }, function () {
-                    layer.msg("无需鼠标，导航音乐键盘A-K也可以体验哦~~")
-                }),
-                e("全站音频已开启~")) : ($(this).removeClass("hover"), $(".nav ul.music-nav li > p").css("opacity", "0"), localStorage.setItem("off_y", 0), layer.msg("全站音频已关闭，期待您的下次体验！", {
-                    time: 4e3
-                }),
-                e("全站音频已关闭，期待您的下次体验！"))
-        }), $(".js_piano_nav_icon").mouseenter(function () {
-            1 != localStorage.getItem("off_y") ? layer.tips("开启全站音频", ".js_piano_nav_icon", {
-                tips: 3,
-                tipsMore: !1,
-                time: 2e3
-            }) : layer.tips("关闭全站音频", ".js_piano_nav_icon", {
-                tips: 3,
-                tipsMore: !1,
-                time: 2e3
-            })
-        });
+        s = s ? ($(".header").css("z-index", "11"), !1) : ($(".header").css("z-index", "10"), !0), $(".site-search.active.pc").stop(!0, !0).slideToggle(150), $(".site-search.active.pc").find("input").focus(), $(this).find("i").toggleClass("icon-guanbi3")
+    }), $(".header").addClass("Top"), 1 != localStorage.getItem("off_y") ? ($(".nav ul.music-nav li > p").css("opacity", "0"), localStorage.setItem("off_y", 0)) : ($(".nav ul.music-nav li > p").css("opacity", "1"), localStorage.setItem("off_y", 1), $(".mod-header_music-icon").addClass("hover")), $(".mod-header_music-icon").click(function () {
+        1 != localStorage.getItem("off_y") ? ($(this).addClass("hover"), $(".nav ul.music-nav li > p").css("opacity", "1"), localStorage.setItem("off_y", 1), layer.msg("全站音频已开启~", {
+            time: 2e3
+        }, function () {
+            layer.msg("无需鼠标，导航音乐键盘A-K也可以体验哦~~")
+        }), e("全站音频已开启~")) : ($(this).removeClass("hover"), $(".nav ul.music-nav li > p").css("opacity", "0"), localStorage.setItem("off_y", 0), layer.msg("全站音频已关闭，期待您的下次体验！", {
+            time: 4e3
+        }), e("全站音频已关闭，期待您的下次体验！"))
+    }), $(".js_piano_nav_icon").mouseenter(function () {
+        1 != localStorage.getItem("off_y") ? layer.tips("开启全站音频", ".js_piano_nav_icon", {
+            tips: 3,
+            tipsMore: !1,
+            time: 2e3
+        }) : layer.tips("关闭全站音频", ".js_piano_nav_icon", {
+            tips: 3,
+            tipsMore: !1,
+            time: 2e3
+        })
+    });
     var r = null,
         c = null,
         l = null,
         u = $(".nav ul.music-nav > li:not(.mod-header_music-icon)");
 
     function d(e) {
-
-        e <= u.length && (u.eq(e - 1).find("audio").get(0).src = "/music/" + e + ".mp3", u.eq(e - 1).addClass("active"))
-
+        e <= u.length && (u.eq(e - 1).find("audio").get(0).src = "/music/nav_" + e + ".mp3", u.eq(e - 1).addClass("active"))
     }
     $(".nav ul.music-nav > li:not(.mod-header_music-icon)").hover(function (e) {
         clearTimeout(r), $(this).find(".nav-min").css({
-                opacity: "1",
-                visibility: "visible",
-                top: "49px"
-            }).parent("li").siblings("li").children(".nav-min").css({
-                opacity: "0",
-                visibility: "hidden",
-                top: "70px"
-            }), $(this).siblings("li").children(".nav-min").css({
-                opacity: "0",
-                visibility: "hidden",
-                top: "70px"
-            }), $(this).parents(".header").css("z-index", "11"), c = $(this).index(), l = $(".nav ul.music-nav > li:not(.mod-header_music-icon)").eq(c).find("audio"), 1 == localStorage.getItem("off_y") ? ($(this).addClass("active").siblings("li").removeClass("active"), l.get(0).src = "/music/" + parseInt(c + 1) + ".mp3") : l.get(0).src = "",
-            e.stopPropagation()
+            opacity: "1",
+            visibility: "visible",
+            top: "49px"
+        }).parent("li").siblings("li").children(".nav-min").css({
+            opacity: "0",
+            visibility: "hidden",
+            top: "70px"
+        }), $(this).siblings("li").children(".nav-min").css({
+            opacity: "0",
+            visibility: "hidden",
+            top: "70px"
+        }), $(this).parents(".header").css("z-index", "11"), c = $(this).index(), l = $(".nav ul.music-nav > li:not(.mod-header_music-icon)").eq(c).find("audio"), 1 == localStorage.getItem("off_y") ? ($(this).addClass("active").siblings("li").removeClass("active"), l.get(0).src = "/music/nav_" + parseInt(c + 1) + ".mp3") : l.get(0).src = "", e.stopPropagation()
     }, function () {
         var e = this;
         clearTimeout(r), r = setTimeout(function () {
@@ -194,8 +190,7 @@ $(function () {
     var p, m, y, v, g, b = 0;
     for (document.addEventListener("touchend", function (e) {
             var t = (new Date).getTime();
-            t - b <= 300 && e.preventDefault(),
-                b = t
+            t - b <= 300 && e.preventDefault(), b = t
         }, !1), $(".xis").on("touchstart", function () {
             $(".os-headertop .site-search").slideToggle(100), $(this).find("i").toggleClass("fa-search"), $(this).find("i").toggleClass("fa-remove")
         }), $("html,body").width() < 960 && ($(".nav-s1 > a").html("给我留言"), $(".log-text").css("width", "100%")), i = 0; i <= $(".mouseover ul li").length; i++) $(".mouseover ul li").eq(i).find("em").html(i + 1);
@@ -369,8 +364,7 @@ $(function () {
     function m(e) {
         jQuery(e + "a").click(function (e) {
             if (0 <= this.href.indexOf(i) && 1 == c(this.href)) {
-                e.preventDefault(),
-                    this.blur(), this.title || this.name, this.rel;
+                e.preventDefault(), this.blur(), this.title || this.name, this.rel;
                 try {
                     t = this, jQuery("ul.nav li").each(function () {
                         jQuery(this).removeClass("current-menu-item")

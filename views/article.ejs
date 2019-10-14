@@ -30,25 +30,57 @@
     #article {
         width: 1000px;
         margin: 0 auto;
-        padding-top: 100px;
+        padding-top: 20px;
+        background: #fff;
+        opacity: 0.9;
     }
 
     .layui-table td,
     .layui-table th {
         text-align: center;
     }
+
+    .title {
+        text-align: center;
+        font-size: 24px;
+    }
+
+    .author {
+        text-align: center;
+        padding-top: 30px;
+    }
+
+    .author .time {
+        padding-left: 20px;
+    }
+
+    .content {
+        padding-top: 30px;
+        width: 940px;
+        margin: 0 auto;
+    }
+
+    #comment {
+        margin-top: 30px;
+        border-top: 1px solid;
+        padding-top: 30px;
+    }
+
+    #comment h2 {
+        color: #1890ff;
+        font-weight: bold;
+        font-size: 30px;
+    }
 </style>
 
 <div id="article">
     <div class="title">
-        标题：<%=data.title%>
+        <%=data.title%>
     </div>
     <div class="author">
-        作者：<%=data.author.username%>
-    </div>
-    <div class="time">
-        发表时间：<%=data.date%>
-
+        <span>作者：<%=data.author.username%></span>
+        <span class="time">时间：<%=time%></span>
+        <span class="time">标签：<%=data.tags%></span>
     </div>
     <div class="content">
         <%-data.content%>
@@ -60,22 +92,28 @@
             <table class="layui-table">
                 <colgroup>
                     <col width="50">
-                    <col width="250">
+                    <col width="50">
+                    <col width="200">
+                    <col width="100">
                     <col width="50">
                 </colgroup>
                 <thead>
                     <tr>
+                        <th>头像</th>
                         <th>昵称</th>
                         <th>评论</th>
-                        <!-- <th>时间</th> -->
+                        <th>时间</th>
                         <th>操作</th>
                     </tr>
                 </thead>
                 <tbody>
                     <%commentData.forEach(v=>{%>
                     <tr>
+                        <td><img width="40" height="40" style="border-radius: 50%;"
+                                src="/photo/<%=v.author.userInfo.photo%>" alt=""></td>
                         <td><%=v.author.username%></td>
                         <td><%=v.content%></td>
+                        <td id="time2"><%=format(v.date)%></td>
                         <td>
                             <div class="layui-btn delete" data-id="<%=v._id%>">删除</div>
                         </td>
@@ -121,6 +159,7 @@
                             url: "/comment",
                             data: postData,
                             success: function (data) {
+
                                 if (data.code === 1) {
                                     layer.alert(data.msg, function () {
                                         location.reload();

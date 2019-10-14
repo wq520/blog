@@ -205,7 +205,18 @@
                     <div class="layui-form-item">
                         <label class="layui-form-label">分类</label>
                         <div class="tags" id="tags" style="margin:40px 111px;">
-                            <input type="text" name="" id="inputTags" placeholder="回车生成标签" autocomplete="off">
+                            <!-- <input type="text" name="" id="inputTags" placeholder="回车生成标签" autocomplete="off"> -->
+                            <select lay-verify="required" , id="inputTags" name="tags" , lay-filter="column">
+                                <option value=""></option>
+                                <option value="CSS">感悟</option>
+                                <option value="nodejs">node</option>
+                                <option value="vue">vue</option>
+                                <option value="react">react</option>
+                                <option value="angular">angular</option>
+                                <option value="HTML">HTML</option>
+                                <option value="javascript">javascript</option>
+                                <option value="CSS">CSS</option>
+                            </select>
                         </div>
                     </div>
                     <div class="layui-form-item">
@@ -263,15 +274,20 @@
 
         //富文本
         var layedit = layui.layedit;
-        var index = layedit.build('article'); //建立编辑器
+        //建立编辑器
+        const index = layedit.build('article', {
+            hideTool: [
+                'image' //插入图片
+            ]
+        });
 
         //标签
-        var inputTags = layui.inputTags;
-        inputTags.render({
-            elem: '#inputTags',
-            content: [],
-            aldaBtn: false
-        });
+        // var inputTags = layui.inputTags;
+        // inputTags.render({
+        //     elem: '#inputTags',
+        //     content: [],
+        //     aldaBtn: false
+        // });
 
         //上传头像
         var upload = layui.upload;
@@ -394,9 +410,9 @@
         });
         //监听文章发表
         form.on("submit(article)", function (data) {
-            var $tags = $("#tags span em"),
-                $content = $("#article");
-
+            var $content = $("#article");
+            var option = $('#inputTags').find("option:selected").text()
+            // console.log(option)
             var postData = {
                 title: data.field.title,
                 tags: [],
@@ -404,9 +420,9 @@
             };
             // console.log(postData);
 
-            $tags.each(function () {
-                postData.tags.push($(this).text())
-            });
+            // $tags.each(function () {
+            postData.tags.push(option)
+            // });
             $.ajax({
                 method: "POST",
                 url: "/article",

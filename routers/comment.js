@@ -15,51 +15,52 @@ router.post("/", (req, res) => {
     }
 
     let userId = req.session.userInfo._id;
+    let username = req.session.userInfo.username
     let articleId = req.body.articleId;
     let content = req.body.desc;
 
     if (userId && articleId && content) {
         comment.create({
-            content,
-            article: articleId,
-            author: userId
-        }).then(data => {
-            res.send({
-                code: 1,
-                msg: "评论成功"
-            });
-            // 更新当前文章的评论计数器
-            article.update({
-                _id: data.article
-            }, {
-                $inc: {
-                    commentNum: 1
-                }
-            }, err => {
-                if (err) return console.log(err);
-                console.log('评论计数器更新成功');
-
-
+                content,
+                article: articleId,
+                author: userId,
             })
-
-            // 更新用户的评论计数器
-            user
-                .update({
+            .then(data => {
+                res.send({
+                    code: 1,
+                    msg: "评论成功",
+                });
+                // 更新当前文章的评论计数器
+                article.update({
                     _id: data.article
                 }, {
                     $inc: {
                         commentNum: 1
                     }
                 }, err => {
-                    if (err) return console.log(err)
+                    if (err) return console.log(err);
+
+
                 })
 
-        }).catch(e => {
-            return res.send({
-                code: 0,
-                msg: "服务器异常，请稍后重试。"
-            })
-        });
+                // 更新用户的评论计数器
+                user
+                    .update({
+                        _id: data.article
+                    }, {
+                        $inc: {
+                            commentNum: 1
+                        }
+                    }, err => {
+                        if (err) return console.log(err)
+                    })
+
+            }).catch(e => {
+                return res.send({
+                    code: 0,
+                    msg: "服务器异常，请稍后重试。"
+                })
+            });
     } else {
         return res.send({
             code: 0,
@@ -83,7 +84,7 @@ router.post("/delete", (req, res) => {
     let articleId = req.body.articleId;
 
     if (authorId && articleId && commentId) {
-        
+
         //判断用户是否是文章作着
         article.findById(articleId)
             .then(data => {
@@ -97,17 +98,16 @@ router.post("/delete", (req, res) => {
                                 msg: "删除成功"
                             });
                             article.update({
-            _id: req.body.articleId
-        }, {
-            $inc: {
-                commentNum: -1
-            }
-        }, err => {
-            if (err) return console.log(err);
-            console.log('评论计数器更新成功');
+                                _id: req.body.articleId
+                            }, {
+                                $inc: {
+                                    commentNum: -1
+                                }
+                            }, err => {
+                                if (err) return console.log(err);
 
 
-        })
+                            })
                         }).catch(e => {
                             res.send({
                                 code: 0,
@@ -137,18 +137,16 @@ router.post("/delete", (req, res) => {
                                     code: 1,
                                     msg: "删除成功"
                                 });
-                                 article.update({
-            _id: req.body.articleId
-        }, {
-            $inc: {
-                commentNum: -1
-            }
-        }, err => {
-            if (err) return console.log(err);
-            console.log('评论计数器更新成功');
+                                article.update({
+                                    _id: req.body.articleId
+                                }, {
+                                    $inc: {
+                                        commentNum: -1
+                                    }
+                                }, err => {
+                                    if (err) return console.log(err);
 
-
-        })
+                                })
                             }).catch(e => {
                                 res.send({
                                     code: 0,

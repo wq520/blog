@@ -4,21 +4,18 @@
 * @Last Modified by:   xuzhiwen
 * @Last Modified time: 2018-09-07 15:26:19
 */
-em{
-  font-style: normal;
+em {
+    font-style: normal;
 }
-#tags
-{
-    width: 406px;
-    margin: 40px auto;
-    padding: 10px;
 
+#tags {
+    width: 200px;
+    margin: 40px auto;
     color: #777;
-    border: 1px solid #d5d5d5;
     background-color: #fff;
 }
 
-#tags span{
+#tags span {
     font-size: 12px;
     font-weight: normal;
     line-height: 16px;
@@ -36,7 +33,8 @@ em{
     background-color: #009688;
     text-shadow: 1px 1px 1px rgba(0, 0, 0, .15);
 }
-#tags .close{
+
+#tags .close {
     font-size: 12px;
     font-weight: bold;
     line-height: 20px;
@@ -55,11 +53,13 @@ em{
     background: transparent none repeat scroll 0 0;
     text-shadow: none;
 }
-#tags .close:hover{
-  background: #ffb800;
+
+#tags .close:hover {
+    background: #ffb800;
 }
+
 #inputTags[type='text'],
-#inputTags[type='text']:focus{
+#inputTags[type='text']:focus {
     line-height: 25px;
     display: inline;
     width: 150px;
@@ -70,7 +70,7 @@ em{
     box-shadow: none;
 }
 
-.albtn{
+.albtn {
     line-height: 30px;
     display: block;
     width: 100px;
