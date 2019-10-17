@@ -79,6 +79,7 @@ router.get("/:_id", (req, res) => {
                             select: '_id username userInfo.photo'
                         })
                         .then(commentData => {
+                            commentData = commentData.reverse()
                             res.render("article", {
                                 code: 1,
                                 data,
